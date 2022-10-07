@@ -7,6 +7,25 @@ Matrix = list[list]
 Cell = tuple[int, int]
 
 
+def check(matrix: Matrix) -> None:
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if matrix[i][j] == 0:
+                crossfill(matrix, (i, j), None)
+
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            if matrix[i][j] is None:
+                matrix[i][j] = 0
+
+
+def crossfill(matrix: Matrix, cell: Cell, value) -> None:
+    for i in range(len(matrix)):
+        matrix[i][cell[1]] = value
+    for j in range(len(matrix[0])):
+        matrix[cell[0]][j] = value
+
+
 def main() -> None:
     matrix: Matrix = [
         [1, 2, 3],
@@ -16,33 +35,6 @@ def main() -> None:
 
     check(matrix)
     print(*matrix, sep="\n")
-
-
-def check(matrix: Matrix) -> None:
-    zeros = find_zeros(matrix)
-    for i, j in zeros:
-        fill_row(matrix, i)
-        fill_col(matrix, j)
-
-
-def find_zeros(matrix: Matrix) -> list[Cell]:
-    zeros = []
-    for i in range(len(matrix)):
-        for j in range(len(matrix[i])):
-            if matrix[i][j] == 0:
-                zeros.append((i, j))
-
-    return zeros
-
-
-def fill_row(matrix: Matrix, i: int) -> None:
-    for j in range(len(matrix[0])):
-        matrix[i][j] = 0
-
-
-def fill_col(matrix: Matrix, j: int) -> None:
-    for i in range(len(matrix)):
-        matrix[i][j] = 0
 
 
 if __name__ == "__main__":
